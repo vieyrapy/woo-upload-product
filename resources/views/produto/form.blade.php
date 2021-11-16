@@ -61,12 +61,29 @@
             {!! $errors->first('categorias', '<div class="invalid-feedback">:message</p>') !!}
         </div>
         <div class="form-group">
-            {{ Form::label('imagenes') }}
-            {{ Form::text('imagenes', $produto->imagenes, ['class' => 'form-control' . ($errors->has('imagenes') ? ' is-invalid' : ''), 'placeholder' => 'Imagenes']) }}
-            {!! $errors->first('imagenes', '<div class="invalid-feedback">:message</p>') !!}
-        </div>
-        <div id="drop_zone">Drop files here</div>
-<output id="list"></output>
+ 
+            <input type="file" id="files" name="files[]" multiple />
+            <output id="list"></output>
+            <input class="form-control"  name="imagenes" type="text" id="imagenes">
+          
+           
+            <script>
+                function handleFileSelect(evt) {
+                    var files = evt.target.files; // FileList object
+
+                    // files is a FileList of File objects. List some properties.
+                    var output = [];
+                    for (var i = 0, f; f = files[i]; i++) {
+                    output.push( escape(f.name), ', ');
+                    }
+                    document.getElementById('imagenes').value = output.join('');
+                }
+
+                document.getElementById('files').addEventListener('change', handleFileSelect, false);
+            </script>
+            </div>
+
+
 
     </div>
     <div class="box-footer mt20">

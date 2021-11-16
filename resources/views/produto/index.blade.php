@@ -33,7 +33,8 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover">
+                            @csrf
+                            <table id="editable" class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
@@ -82,4 +83,31 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-Token' : $("input[name=_token]").val()
+            }
+        });
+        $('#editable').Tabledit({
+            url: '{{route("produtos.action")}}',
+            dataType: "json", 
+            columns:{
+                identifier:[0, 'id'],
+                editable:[[1, 'lista_id'], [2, 'sku'], [3, 'nombre'], [4, 'descripcion'], [5, 
+                'precionormal'], [6, 'categorias'], [7, 'imagenes']]
+
+            },
+            restoreButton: false,
+            onSuccess: function(produtos, textStatus, jqXHR){
+                if (produtos.action == 'delete') {
+                    $('#'+produtos.id).remove();
+                }
+            }   
+        });
+    });
+</script>
 @endsection

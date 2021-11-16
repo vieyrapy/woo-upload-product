@@ -21,5 +21,7 @@ Auth::routes();
 Route::resource('produtos', App\Http\Controllers\ProdutoController::class)->middleware('auth');
 Route::get('/produto/export', [App\Http\Controllers\ProdutoController::class, 'export'])->name('produtos.export');
 
+Route::post('produto/action', [App\Http\Controllers\ProdutoController::class, 'action'])->name('produtos.action');
+
 Route::resource('listas', App\Http\Controllers\ListaController::class)->middleware('auth');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
